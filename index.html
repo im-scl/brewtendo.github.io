@@ -676,5 +676,20 @@
             sidebarOverlay.classList.remove('open');
         });
     </script>
+
+    <script>
+    (function() {
+        if (!window.bgMusic) {
+            const audio = document.createElement('audio');
+            audio.src = 'https://brewtendo.github.io/data/08.%20June%202011%20(3DS).mp3';
+            audio.autoplay = true;
+            audio.loop = true;
+            audio.id = 'bgMusic';
+            audio.style.display = 'none';
+            document.body.appendChild(audio);
+            window.bgMusic = audio;
+        }
+    })();
+</script>
 </body>
 </html>
