@@ -6,13 +6,41 @@
     <title>Brewtendo</title>
     <link rel="icon" type="image/png" href="https://files.catbox.moe/1i8mb4.png">
     <style>
-        @font-face {
-            font-family: 'Rodin';
-            src: url('https://db.onlinewebfonts.com/t/86e0ab11multimediaf8842d2cacf00f358.woff2') format('woff2'),
-                 url('https://db.onlinewebfonts.com/t/86e0ab11multimediaf8842d2cacf00f358.woff') format('woff');
-            font-weight: normal;
-            font-style: normal;
-        }
+/* Top bar (sidebar contents moved here) */
+.top-bar{
+    background: linear-gradient(to bottom,#ff9944 0%,#ff8833 100%);
+    padding:8px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.2);
+    position:sticky;
+    top:0;
+    z-index:1000;
+}
+.top-left{display:flex;align-items:center;gap:12px}
+.top-logo{width:44px;height:44px;border-radius:8px;box-shadow:0 2px 6px rgba(0,0,0,0.2)}
+.brand{color:white;font-family:'RodinBold','Rodin',Arial,sans-serif;font-weight:700;font-size:18px;text-shadow:0 1px 2px rgba(0,0,0,0.25)}
+
+.nav-links{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.nav-links a{color:white;text-decoration:none;font-weight:700;padding:8px 12px;border-radius:10px;transition:background .15s ease,transform .12s ease;font-family:'RodinBold','Rodin',Arial,sans-serif}
+.nav-links a:hover{background:rgba(255,255,255,0.12);transform:translateY(-2px)}
+
+        
+@font-face {
+    font-family: 'Rodin';
+    src: url('https://files.catbox.moe/t49ue8.otf') format('opentype');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'RodinBold';
+    src: url('https://files.catbox.moe/6iytdd.otf') format('opentype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
         
         * {
             margin: 0;
@@ -118,7 +146,7 @@
             justify-content: center;
             gap: 10px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-            position: relative;
+            position: sticky; top: 0; z-index: 1000;
         }
 
         .menu-btn {
@@ -519,48 +547,21 @@
     </style>
 </head>
 <body>
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-    
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <img src="https://files.catbox.moe/1i8mb4.png" alt="Brewtendo" class="sidebar-logo">
-            <div class="sidebar-title">Brewtendo</div>
-        </div>
-        
-        <div class="sidebar-section">
-            <div class="sidebar-section-title">Navigation</div>
-            <a href="https://brewtendo.github.io" class="sidebar-item">Home</a>
-            <a href="https://brewtendo.github.io/guide" class="sidebar-item">Installation Guide</a>
-            <a href="https://brewtendo.github.io/support" class="sidebar-item">Support</a>
-        </div>
-
-        <div class="sidebar-section">
-            <div class="sidebar-section-title">Resources</div>
-            <a href="https://github.com/Brewtendo/brewtendo.github.io" class="sidebar-item">GitHub Repository</a>
-            <a href="#" class="sidebar-item">FAQ</a>
-        </div>
-    </div>
-
     <div class="top-bar">
-        <button class="menu-btn" id="menuBtn">
-            <div class="menu-icon">
-                <svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="2" y1="4" x2="14" y2="4"/>
-                    <line x1="2" y1="8" x2="14" y2="8"/>
-                    <line x1="2" y1="12" x2="14" y2="12"/>
-                </svg>
-            </div>
-            Menu
-        </button>
-        <input type="text" class="search-bar" placeholder="Search">
-        <button class="search-btn">
-            <svg class="search-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-            </svg>
-        </button>
-    </div>
+  <div class="top-left">
+    <img src="https://files.catbox.moe/1i8mb4.png" class="top-logo" alt="Brewtendo logo">
+    <div class="brand">Brewtendo</div>
+  </div>
 
-    <div class="container">
+  <nav class="nav-links" aria-label="Main navigation">
+    <a id="sidebarHome" href="https://brewtendo.github.io">Home</a>
+    <a id="sidebarGuide" href="https://brewtendo.github.io/guide">Installation Guide</a>
+    <a id="sidebarSupport" href="https://brewtendo.github.io/support">Support</a>
+    <a id="sidebarGithub" href="https://github.com/Brewtendo/brewtendo.github.io">GitHub Repository</a>
+    <a id="sidebarFaq" href="#">FAQ</a>
+  </nav>
+</div>
+<div class="container">
         <div class="hero-section">
             <img src="https://files.catbox.moe/1i8mb4.png" alt="Brewtendo" class="hero-logo">
             <div class="hero-content">
