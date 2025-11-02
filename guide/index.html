@@ -203,8 +203,8 @@ body{
     </button>
 
     <div class="language-dropdown" id="languageDropdown" role="menu" aria-hidden="true">
-      <div class="language-option active" data-lang="en" role="menuitem"><span class="language-emoji">🇺🇸</span>English</div>
-      <div class="language-option" data-lang="es" role="menuitem"><span class="language-emoji">🇪🇸</span>Español</div>
+      <div class="language-option active" data-lang="en" role="menuitem"><span class="language-emoji">ðŸ‡ºðŸ‡¸</span>English</div>
+      <div class="language-option" data-lang="es" role="menuitem"><span class="language-emoji">ðŸ‡ªðŸ‡¸</span>EspaÃ±ol</div>
     </div>
   </div>
   -->
@@ -281,14 +281,14 @@ body{
     <div class="step-content">
       <h4 id="step5Subtitle">Configure Network Settings</h4>
       <p id="step5Text1">Put the SD Card back into your 3DS.</p>
-      <p id="step5Text2">Turn on your system. It should be on the HOME Menu. If so, navigate to and open System Settings → Internet Settings → Connection Settings.</p>
+      <p id="step5Text2">Turn on your system. It should be on the HOME Menu. If so, navigate to and open System Settings â†' Internet Settings â†' Connection Settings.</p>
       <p id="step5Text3">Select your active connection, then hit Change Settings.</p>
       <p id="step5Text4">Scroll until you find Proxy Settings.</p>
       <p id="step5Text5">Choose Yes, then select Detailed Setup.</p>
       <p id="step5Text6">Enter the Proxy Server into the Proxy Server spot, and enter the Port in the Port spot.</p>
       <div class="code-block">Proxy Server: 66.65.72.148
 Port: 8888</div>
-      <p id="step5Text7">Click OK → Save Settings → Test Connection.</p>
+      <p id="step5Text7">Click OK â†' Save Settings â†' Test Connection.</p>
       <p id="step5Text8">If it says the connection test was successful, you're good to go.</p>
     </div>
   </div>
@@ -319,6 +319,11 @@ oh and psst.. nebulagamez was here ;)</p>
     <a id="footerGithub" href="https://github.com/Brewtendo/brewtendo.github.io">GitHub</a>
   </div>
 </footer>
+
+<!-- Background music -->
+<audio id="bgMusic" loop autoplay>
+    <source src="/data/08. June 2011 (3DS).mp3" type="audio/mpeg">
+</audio>
 
 <script>
 // language dropdown toggle & translations
@@ -355,6 +360,70 @@ langOptions.forEach(opt => {
     languageDropdown.classList.remove('show');
   });
 });*/
+
+// Background music with persistence across pages - AGGRESSIVE AUTOPLAY
+const bgMusic = document.getElementById('bgMusic');
+bgMusic.volume = 0.3; // Set to 30% volume
+
+// Restore playback position and state from previous page
+const savedTime = sessionStorage.getItem('musicTime');
+const wasPlaying = sessionStorage.getItem('musicPlaying');
+
+if (savedTime) {
+    bgMusic.currentTime = parseFloat(savedTime);
+}
+
+// Aggressively try to play music
+const tryPlay = () => {
+    const playPromise = bgMusic.play();
+    if (playPromise !== undefined) {
+        playPromise.then(() => {
+            sessionStorage.setItem('musicPlaying', 'true');
+        }).catch(() => {
+            // Silently retry
+            setTimeout(tryPlay, 100);
+        });
+    }
+};
+
+// Try immediately
+tryPlay();
+
+// Add multiple event listeners to catch ANY user interaction
+const events = ['click', 'keydown', 'touchstart', 'touchend', 'mousedown', 'scroll'];
+const playOnce = () => {
+    if (bgMusic.paused) {
+        tryPlay();
+    }
+    // Remove all listeners after first successful play
+    if (!bgMusic.paused) {
+        events.forEach(event => {
+            document.removeEventListener(event, playOnce);
+        });
+    }
+};
+
+events.forEach(event => {
+    document.addEventListener(event, playOnce, { once: false });
+});
+
+// Try again after a short delay
+setTimeout(tryPlay, 500);
+setTimeout(tryPlay, 1000);
+
+// Save state before leaving page
+window.addEventListener('beforeunload', () => {
+    sessionStorage.setItem('musicTime', bgMusic.currentTime);
+    sessionStorage.setItem('musicPlaying', !bgMusic.paused ? 'true' : 'false');
+});
+
+// Update time periodically
+setInterval(() => {
+    if (!bgMusic.paused) {
+        sessionStorage.setItem('musicTime', bgMusic.currentTime);
+        sessionStorage.setItem('musicPlaying', 'true');
+    }
+}, 1000);
 </script>
 </body>
 </html>
